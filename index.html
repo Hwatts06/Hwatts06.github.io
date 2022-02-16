@@ -4,36 +4,112 @@
     
     </head>
     <title> Haley's Website</title>
+    <style>
+        body {
+            background: rgb(252, 231, 3);
+            color: rgb(252, 3, 3);
+            padding: 10px;
+            font-family: arial;
+        }
+        #all-contents {
+          max-width: 800px;
+            margin: auto;
+        }
+     
+        /* navigation menu */
+        nav {
+            background: rgb(252, 111, 3);
+           margin: 0 auto;
+           margin-bottom: 20px;
+            display: flex;
+            padding: 10px;
+            border-radius: 25% 10%;
+        }
+        h1 {
+            display: flex;
+            align-items: center;
+            color: white;
+            flex: 1;
+            margin: 0;
+        }
+        #nav-ul {
+            list-style-image: none;
+        }
+        .nav-li {
+            display: inline-block;
+            padding: 0 10px;
+        }
+        a {
+            text-decoration: none;
+            color: #fff;
+        }
+     
+        /* main container area beneath menu */
+        main {
+            background: rgb(245, 238, 219);
+            display: flex;
+        }
+        .sidebar {
+            margin-right: 25px;
+            padding: 10px;
+        }
+        .sidebar-img {
+            width: 200px;
+        }
+        .content {
+            flex: 1;
+            padding: 15px;
+        }
+        #interests {
+            border: 4px silver ridge;
+            padding: 8px;
+        }
+        h2, h3 {
+            margin: 0px;
+        }
+     </style>
     <body>
     <!-- All content goes here -->
-       <div>
+       <div id="all-contents">
            <nav>
-
+                <h1>Haley's website</h1>
+                <ul id="nav-ul">
+                    <li class="nav-li">
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li class="nav-li">
+                        <a href="portfolio.html">Portfolio</a>
+                    </li>
+                </ul>
            </nav>
           
            <main>
-         <!-- Sidebar section -->
-            <div>
-                <h2> Haley</h2>
-                <p> student at fshs</p>
-       <!-- Interests section -->
-       <div>
-           <h3>Interests</h3>
-           <ul>
-               <li>thing 1</li>
-               <li>thing 2</li>
-               <li>thing 3</li>
-           </ul>
-       </div>
+                <!-- Sidebar section -->
+                <div class="sidebar">
+                    <img class="sidebar-img" src="https://bloximages.chicago2.vip.townnews.com/livingstonparishnews.com/content/tncms/assets/v3/editorial/7/ee/7eee3ff4-3930-11e9-859c-23b0d7b7c242/5c743cc639aa3.image.jpg?resize=1200%2C973">
+                </div> 
 
-            </div>
-            <div>
+                
+                <!--content-->
+                <div class="content">
 
-            </div>
+                    <h2> Haley</h2>
+                    <p> student at fshs</p>
+                    <!-- Interests section -->
+                    <div class="interests"> 
+                        
+                        <h3>Interests</h3>
+                        <ul>
+                            <li>books</li>
+                            <li>movies</li>
+                            <li>animals</li>
+                        </ul>
+                    </div>
+                </div>
            </main>
            
 
           </div>
     
     </body>
-</html>
+</html
