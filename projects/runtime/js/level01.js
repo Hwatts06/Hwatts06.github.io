@@ -22,7 +22,7 @@ var level01 = function (window) {
                 { type: "enemy", "x": 500, "y": groundY - 50        },
                 {  type: "enemy", "x": 700, "y": groundY - 50        },
                 {  type: "enemy", "x": 1300, "y": groundY - 50       },
-                {   type: "reward", "x": 1500, "y": groundY - 25    },
+                {   type: "reward", "x": 1500, "y": groundY - 100    },
             ]
         };
 
@@ -43,7 +43,7 @@ var level01 = function (window) {
         }
         window.levelData = levelData;
         // set this to true or false depending on if you want to see hitzones
-        game.setDebugMode(true);
+        game.setDebugMode(false);
 
         
 
@@ -115,7 +115,7 @@ var level01 = function (window) {
 
             game.addGameItem(reward);
 
-            reward.velocityX = -1;
+            reward.velocityX = -2;
 
             reward.rotationalVelocity = 10;
 
@@ -129,7 +129,6 @@ var level01 = function (window) {
 
             reward.onProjectileCollision = function () {
                 console.log("Halle has hit the reward");
-                game.increaseScore();
             }
             
         }
