@@ -67,7 +67,7 @@ var level01 = function (window) {
 
         
         
-
+    /// creating an enemy
         function createEnemy(x, y) {
 
             var enemy = game.createGameItem('enemy', 25);
@@ -101,7 +101,7 @@ var level01 = function (window) {
         }
         
     
-    
+        ///creating a reward
         function createReward(x, y) {
 
             var reward = game.createGameItem('reward', 25);
@@ -115,7 +115,7 @@ var level01 = function (window) {
 
             game.addGameItem(reward);
 
-            reward.velocityX = -2;
+            reward.velocityX = -3;
 
             reward.rotationalVelocity = 10;
 
