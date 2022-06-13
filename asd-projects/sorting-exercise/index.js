@@ -44,10 +44,10 @@ async function partition(array, left, right){
     pivot = array[Math.floor((right + left)/2)].value;
 
     while(left < right){
-        while(array[left] < pivot){
+        while(array[left].value < pivot){
             left++
         }
-        while(array[right] > pivot){
+        while(array[right].value > pivot){
             right--
         }
         if(left < right){
