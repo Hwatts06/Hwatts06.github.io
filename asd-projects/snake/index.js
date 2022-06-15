@@ -23,6 +23,20 @@ function runProgram(){
     "D": 68,
   }
 
+  function GameItem(elementId){
+    var gameItem = {};
+gameItem.id = elementId;
+gameItem.x = parseFloat($(elementId).css('left'));
+gameItem.y = parseFloat($(elementId).css('top'));;
+gameItem.width = $(elementId).width();
+gameItem.height = $(elementId).height();
+ gameItem.speedX = 0;
+gameItem.speedY = 0;
+return gameItem
+ }
+
+ var head = GameItem("#head")
+
   // one-time setup
   var interval = setInterval(newFrame, FRAMES_PER_SECOND_INTERVAL);   // execute newFrame every 0.0166 seconds (60 Frames per second)
   $(document).on('keydown', handleKeyDown);                           // change 'eventType' to the type of event you want to handle
@@ -48,20 +62,20 @@ function runProgram(){
   
     function handleKeyDown(event) {
       if (event.which === KEY.LEFT) {
-        speedX = -5;
+        headspeedX = -5;
         console.log("left pressed");
     }
     else if (event.which === KEY.UP) {
-      speedY = -5;
+      head.speedY = -5;
       console.log("up pressed");
     }
   
       else if (event.which === KEY.RIGHT) {
-        speedX = 5;
+        head.speedX = 5;
         console.log("right pressed");
     }
     else if (event.which === KEY.DOWN) {
-      speedY = 5;
+      head.speedY = 5;
       console.log("down pressed");
     }
     
@@ -70,20 +84,20 @@ function runProgram(){
   
   function handleKeyUp(event){
     if (event.which === KEY.LEFT) {
-      speedX = 0;
+      head.speedX = 0;
       console.log("left not pressed");
   }
   else if (event.which === KEY.UP) {
-    speedY = 0;
+    head.speedY = 0;
     console.log("up not pressed");
   }
   
     else if (event.which === KEY.RIGHT) {
-      speedX = 0;
+      head.speedX = 0;
       console.log("right not pressed");
   }
   else if (event.which === KEY.DOWN) {
-    speedY = 0;
+    head.speedY = 0;
     console.log("down not pressed");
   }
   
@@ -104,12 +118,12 @@ piece.x += piece.speedX;
 
 };
 
-function updatePousitionBody(){
+function updatePositionBody(){
 
 }
 
 function redrawPiece(piece){
-  $(piece.id).css("left", head)
+  $(piece.id).css("left", piece.x)
 }
 
 var head = {
@@ -123,27 +137,6 @@ var head = {
 head.x += head.speedX;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-////appple///////
-
-apple = {
-  id: apple,
-  x: 0,
-  y: 0,
-}
 
 
 
