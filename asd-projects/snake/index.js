@@ -52,7 +52,9 @@ return gameItem
   */
   function newFrame() {
    redrawGameItem();
-   repositionGameItem();
+   updatePositionBody();
+   updateposition();
+   redrawPiece();
   }
   
 
@@ -78,7 +80,7 @@ return gameItem
       head.speedY = 5;
       console.log("down pressed");
     }
-    
+  }
   
   
   
@@ -107,9 +109,9 @@ return gameItem
 
 
 ////creating game item////
-function redrawGameItem(){
-  $("#snake").css("left", positionX);  
-  $("#snake").css("top", positionY); 
+function redrawGameItem(piece){
+  $(piece.id).css("left", piece.positionX);  
+  $(piece.id).css("top", piece.positionY); 
 };
 
 ///repostion///
@@ -180,4 +182,4 @@ head.x += head.speedX;
   }
   
 }
-}
+
