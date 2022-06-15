@@ -55,6 +55,11 @@ function applyFilter(filterFunction) {
 
 }
 
+
+
+
+
+
 // TODO 7: Create the applyFilterNoBackground function
 function applyFilterNoBackground(filterFunction) {
   var backGroundColor = image[0][0]
@@ -113,3 +118,21 @@ function increaseGreenByBlue(array){
 
 
 // CHALLENGE code goes below here
+function smudging(filerFunction){
+  for (var r = 0; r < image.length; r++) {
+    var row = image[r];
+
+    for (var c = 0; c < row.length; c++) {
+      var rgbString = row[c];
+
+      var rgbNumbers = rgbStringToArray(rgbString);
+
+      filterFunction(rgbNumbers,/*need something here figure it out*/ );
+
+      rgbString = rgbArrayToString(rgbNumbers);
+      row[c] = rgbString;
+    }
+
+   
+  }
+}
