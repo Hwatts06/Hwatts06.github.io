@@ -1,0 +1,28 @@
+/*
+User Story / Gameplay
+ 
+
+Describe the gameplay
+    t
+What are the conditions when the game begins?
+
+
+Does the game have an end? If so, what are the conditions for when it ends?
+
+What ifs will there be?
+
+Visual Game Components:
+What are the visual game components? For example, in Bouncing Box, the game components were the board and the box.
+Which will be static? (the board)
+Which will be animated? (the box)
+What data will you need to manage each game component? For example, in Bouncing Box, the data values were positionX, speedX, and points.
+Events / Logic
+What events will occur in this game? (timer events, keyboard events, clicking events?)
+How do those events affect the data of the program?
+For each "event", write out the high-level logic of what will happen. It is better (and tricky) to be as specific as you can while remaining high-level!
+
+
+
+
+
+*/

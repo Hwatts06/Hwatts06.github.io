@@ -1,0 +1,43 @@
+/*
+User Story / Gameplay
+    2 player pong
+Describe the gameplay
+  there will be one player who controls the left paddle and then there will be another player controlling the right paddle
+
+What are the conditions when the game begins?
+    both players start with 0 points, the ball is on a radom side. the paddles are set in the middle on the side
+
+Does the game have an end? If so, what are the conditions for when it ends?
+  game ends when one player reaches 5 points
+
+What ifs will there be?
+  if one side touches the ball and the other side didnt touch it the side that touches gets the point
+
+Visual Game Components:things you see
+
+What are the visual game components? For example, in Bouncing Box, the game components were the board and the box.
+  the score, the ball, the paddles
+
+Which will be static? (the board)
+  the score and scoreboard
+
+Which will be animated? (the box)
+  the paddles, the ball, the scoreboard
+
+What data will you need to manage each game component? For example, in Bouncing Box, the data values were positionX, speedX, and points.
+speedX, speedY, positionX, positionY, points, randomness of the ball start
+
+Events / Logic
+What events will occur in this game? (timer events, keyboard events, clicking events?)
+  keyboard events, if statements(if bouncing off the wall), score changing, paddles moving, randomness of start ball 
+
+  How do those events affect the data of the program?
+keyboard events: the way the paddles move
+if statments: score changing and randomness of ball
+
+For each "event", write out the high-level logic of what will happen. It is better (and tricky) to be as specific as you can while remaining high-level!
+the keyboard events will cause the  keys s and w move the paddle up and down on the left side. it will also make the up and down key cause the right paddle to move up and down.
+the if statements will make it that if the ball his a paddle it bounces off to the other side and it it goes past the paddle it will give the last person to hit the ball to get a point.
+
+////
+*/
