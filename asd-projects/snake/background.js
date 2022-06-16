@@ -21,7 +21,7 @@ $(document).ready(function () {
         ['#0054ff', '#27e49b'],
         ['#202bc5', '#873dcc']
     ];
-    let count = 70;
+    let count = 25;
     let blur = [12, 70];
     let radius = [1, 120];
 
@@ -97,10 +97,10 @@ $(document).ready(function () {
             item.blur += (item.initialBlurDirection * adjBlur);
             ctx.beginPath();
             ctx.filter = `blur(${item.blur}px)`;
-            let grd = ctx.createLinearGradient(item.gradient[0], item.gradient[1], item.gradient[2], item.gradient[3]);
-            grd.addColorStop(0, item.colorOne);
-            grd.addColorStop(1, item.colorTwo);
-            ctx.fillStyle = grd;
+            //let grd = ctx.createLinearGradient(item.gradient[0], item.gradient[1], item.gradient[2], item.gradient[3]);
+            //grd.addColorStop(0, item.colorOne);
+            //grd.addColorStop(1, item.colorTwo);
+            //ctx.fillStyle = grd;
             ctx.arc(item.x, item.y, item.radius, 0, Math.PI * 2);
             ctx.fill();
             ctx.closePath();

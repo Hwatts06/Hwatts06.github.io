@@ -1,8 +1,10 @@
 /* global $, sessionStorage */
 
+const { speed } = require("jquery");
+
 $(document).ready(runProgram); // wait for the HTML / CSS elements of the page to fully load, then execute runProgram()
-  
-function runProgram(){
+
+function runProgram() {
   ////////////////////////////////////////////////////////////////////////////////
   //////////////////////////// SETUP /////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
@@ -10,7 +12,8 @@ function runProgram(){
   // Constant Variables
   var FRAME_RATE = 60;
   var FRAMES_PER_SECOND_INTERVAL = 1000 / FRAME_RATE;
-  
+  var BASE_SPEED = 5;
+
   // Game Item Objects
   KEY = {
     "LEFT": 37,
@@ -23,24 +26,30 @@ function runProgram(){
     "D": 68,
   }
 
-  function GameItem(elementId){
+  function GameItem(elementId) {
     var gameItem = {};
-gameItem.id = elementId;
-gameItem.x = parseFloat($(elementId).css("left"));
-gameItem.y = parseFloat($(elementId).css("top"));;
-gameItem.width = $(elementId).width();
-gameItem.height = $(elementId).height();
- gameItem.speedX = 0;
-gameItem.speedY = 0;
-return gameItem
- }
+    gameItem.id = elementId;
+    gameItem.x = parseFloat($(elementId).css("left"));
+    gameItem.y = parseFloat($(elementId).css("top"));;
+    gameItem.width = $(elementId).width();
+    gameItem.height = $(elementId).height();
+    gameItem.speedX = 0;
+    gameItem.speedY = 0;
+    return gameItem
+  }
 
- var head = GameItem("#head")
+  var head = GameItem("#head")
+  var mouseX = head.x;
+  var mouseY = head.y;
+
+  var actualSpeed = BASE_SPEED;
+  
 
   // one-time setup
   var interval = setInterval(newFrame, FRAMES_PER_SECOND_INTERVAL);   // execute newFrame every 0.0166 seconds (60 Frames per second)
   $(document).on("keydown", handleKeyDown);                           // change 'eventType' to the type of event you want to handle
-  $(document).on("keyup", handleKeyUp); 
+  $(document).on("keyup", handleKeyUp);
+  $(document).on("mousemove", MouseMove);
 
   ////////////////////////////////////////////////////////////////////////////////
   ///////////////////////// CORE LOGIC ///////////////////////////////////////////
@@ -51,90 +60,110 @@ return gameItem
   by calling this function and executing the code inside.
   */
   function newFrame() {
-   redrawGameItem(piece);
-   updatePositionBody(piece);
-   updateposition(head);
-  
+    redrawGameItem(head);
+    updatePositionBody();
+    updateposition(head);
+    MouseMove(head)
   }
-  
+
 
   /* 
   Called in response to events.
   */
-  
-    function handleKeyDown(event) {
-      if (event.which === KEY.LEFT) {
-        headspeedX = -5;
-        console.log("left pressed");
+
+  function handleKeyDown(event) {
+    if (event.which === KEY.LEFT) {
+      head.speedX = -5;
+      console.log("left pressed");
     }
     else if (event.which === KEY.UP) {
       head.speedY = -5;
       console.log("up pressed");
     }
-  
-      else if (event.which === KEY.RIGHT) {
-        head.speedX = 5;
-        console.log("right pressed");
+
+    else if (event.which === KEY.RIGHT) {
+      head.speedX = 5;
+      console.log("right pressed");
     }
     else if (event.which === KEY.DOWN) {
       head.speedY = 5;
       console.log("down pressed");
     }
   }
-  
-  
-  
-  function handleKeyUp(event){
+
+
+
+  function handleKeyUp(event) {
     if (event.which === KEY.LEFT) {
       head.speedX = 0;
       console.log("left not pressed");
-  }
-  else if (event.which === KEY.UP) {
-    head.speedY = 0;
-    console.log("up not pressed");
-  }
-  
+    }
+    else if (event.which === KEY.UP) {
+      head.speedY = 0;
+      console.log("up not pressed");
+    }
+
     else if (event.which === KEY.RIGHT) {
       head.speedX = 0;
       console.log("right not pressed");
+    }
+    else if (event.which === KEY.DOWN) {
+      head.speedY = 0;
+      console.log("down not pressed");
+    }
+
+
+
   }
-  else if (event.which === KEY.DOWN) {
-    head.speedY = 0;
-    console.log("down not pressed");
+  function MouseMove (event){
+  mouseX = event.pageX
+  mouseY = event.pageY
+ 
   }
-  
-  
-  
+  /////////////////////spped////////////////////
+  function speedOfSnakeCursor(){
+    var offsetX = mouseX - head.x;
+    var offsetY = mouseY - head.y;
+
+    var angle = Math.atan2(offsetY, offsetX);
+
+    // you will need to make two more events for click and release of mouse;
+    // those events should change the "speed" variable
+
+    head.speedX = speed * Math.cos(angle);
+    head.speedY = speed * Math.sin(angle);
+    
   }
 
 
-////creating game item////
-function redrawGameItem(piece){
-  $(piece.id).css("left", piece.positionX);  
-  $(piece.id).css("top", piece.positionY); 
-};
+  ////creating game item////
+  function redrawGameItem(piece) {
+    $(piece.id).css("left", piece.x);
+    $(piece.id).css("top", piece.y);
+  };
 
-///repostion///
-function updateposition(piece){
-piece.x += piece.speedX;
+  ///repostion///
+  function updateposition(piece) {
+    piece.x += piece.speedX;
+    piece.y += piece.speedY
 
-};
+  };
 
-function updatePositionBody(){
+  function updatePositionBody() {
 
-}
+  }
 
 
 
-var head = {
-  id: "#head",
-  x: 0,
-  y: 0,
-  speedX: 0,
-  speedY: 0,
-};
+  var head = {
+    id: "#head",
+    x: 0,
+    y: 0,
+    speedX: 0,
+    speedY: 0,
+  };
 
-head.x += head.speedX;
+  head.x += head.speedX;
 
 
 
@@ -147,7 +176,7 @@ head.x += head.speedX;
   ////////////////////////// HELPER FUNCTIONS ////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
 
-  
+
 
 
 
@@ -178,6 +207,6 @@ head.x += head.speedX;
     // turn off event handlers
     $(document).off();
   }
-  
+
 }
 
