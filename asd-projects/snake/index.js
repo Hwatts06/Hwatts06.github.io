@@ -26,8 +26,8 @@ function runProgram(){
   function GameItem(elementId){
     var gameItem = {};
 gameItem.id = elementId;
-gameItem.x = parseFloat($(elementId).css('left'));
-gameItem.y = parseFloat($(elementId).css('top'));;
+gameItem.x = parseFloat($(elementId).css("left"));
+gameItem.y = parseFloat($(elementId).css("top"));;
 gameItem.width = $(elementId).width();
 gameItem.height = $(elementId).height();
  gameItem.speedX = 0;
@@ -39,8 +39,8 @@ return gameItem
 
   // one-time setup
   var interval = setInterval(newFrame, FRAMES_PER_SECOND_INTERVAL);   // execute newFrame every 0.0166 seconds (60 Frames per second)
-  $(document).on('keydown', handleKeyDown);                           // change 'eventType' to the type of event you want to handle
-  $(document).on('keyup', handleKeyUp); 
+  $(document).on("keydown", handleKeyDown);                           // change 'eventType' to the type of event you want to handle
+  $(document).on("keyup", handleKeyUp); 
 
   ////////////////////////////////////////////////////////////////////////////////
   ///////////////////////// CORE LOGIC ///////////////////////////////////////////
@@ -51,10 +51,10 @@ return gameItem
   by calling this function and executing the code inside.
   */
   function newFrame() {
-   redrawGameItem();
-   updatePositionBody();
-   updateposition();
-   redrawPiece();
+   redrawGameItem(piece);
+   updatePositionBody(piece);
+   updateposition(head);
+  
   }
   
 
@@ -124,9 +124,7 @@ function updatePositionBody(){
 
 }
 
-function redrawPiece(piece){
-  $(piece.id).css("left", piece.x)
-}
+
 
 var head = {
   id: "#head",
