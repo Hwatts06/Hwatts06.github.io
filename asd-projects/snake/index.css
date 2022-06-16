@@ -1,31 +1,35 @@
-
 body {
   background-color: darkgreen;
 }
 
 #board {
-  width: 1340px;
-  height: 600px;
-  border: 2px solid black;
-  
+  width: 1240px;
+  height: 500px;
+  border: 5px solid black;
+
   position: relative;
 }
 
 #apple {
-  background-color: teal;
+  border-radius: 20px;
+  background-color: #E10600;
   width: 20px;
   height: 20px;
   position: absolute;
-/*   left: 100px; */  /* Uncomment if you want to set a "starting" position */
-/*   top: 100px;  */  /* Uncomment if you want to set a "starting" position */
+  /*   left: 100px; */
+  /* Uncomment if you want to set a "starting" position */
+  /*   top: 100px;  */
+  /* Uncomment if you want to set a "starting" position */
 }
 
-#head{
+#head {
   background-color: #C5E90B;
   width: 20px;
   height: 20px;
   position: absolute;
   border-radius: 20px;
+  left: 20px;
+  top: 20px;
 }
 
 body {
@@ -41,4 +45,13 @@ canvas {
   height: 100%;
 }
 
+#gameOverBox {
+  position: absolute;
+  display: none;
+  background: chocolate;
+  width: 200px;
+  height: 100px;
+  left: 555px;
+  top: 300px;
 
+}

@@ -1,7 +1,5 @@
 /* global $, sessionStorage */
 
-const { speed } = require("jquery");
-
 $(document).ready(runProgram); // wait for the HTML / CSS elements of the page to fully load, then execute runProgram()
 
 function runProgram() {
@@ -12,7 +10,7 @@ function runProgram() {
   // Constant Variables
   var FRAME_RATE = 60;
   var FRAMES_PER_SECOND_INTERVAL = 1000 / FRAME_RATE;
-  var BASE_SPEED = 5;
+  var BASE_SPEED = 10;
 
   // Game Item Objects
   KEY = {
@@ -25,7 +23,7 @@ function runProgram() {
     "S": 83,
     "D": 68,
   }
-
+  
   function GameItem(elementId) {
     var gameItem = {};
     gameItem.id = elementId;
@@ -35,21 +33,22 @@ function runProgram() {
     gameItem.height = $(elementId).height();
     gameItem.speedX = 0;
     gameItem.speedY = 0;
+    
     return gameItem
   }
-
-  var head = GameItem("#head")
+  var board = GameItem("#board");
+  var head = GameItem("#head");
   var mouseX = head.x;
   var mouseY = head.y;
-
+  var gameOverID = "#gameOverBox";
   var actualSpeed = BASE_SPEED;
-  
+
 
   // one-time setup
   var interval = setInterval(newFrame, FRAMES_PER_SECOND_INTERVAL);   // execute newFrame every 0.0166 seconds (60 Frames per second)
   $(document).on("keydown", handleKeyDown);                           // change 'eventType' to the type of event you want to handle
   $(document).on("keyup", handleKeyUp);
-  $(document).on("mousemove", MouseMove);
+  $("#board").on("mousemove", MouseMove);
 
   ////////////////////////////////////////////////////////////////////////////////
   ///////////////////////// CORE LOGIC ///////////////////////////////////////////
@@ -63,7 +62,9 @@ function runProgram() {
     redrawGameItem(head);
     updatePositionBody();
     updateposition(head);
-    MouseMove(head)
+    hitsBorder();
+
+    speedOfSnakeCursor()
   }
 
 
@@ -115,13 +116,28 @@ function runProgram() {
 
 
   }
-  function MouseMove (event){
-  mouseX = event.pageX
-  mouseY = event.pageY
- 
+  function MouseMove(event) {
+    mouseX = event.pageX
+    mouseY = event.pageY
+
   }
+
+  //hits border
+  function hitsBorder() {
+    if (head.x >= board.width) {
+      gameOverBox();
+    } 
+    if (head.y >= board.height){
+      gameOverBox();
+    }
+  }
+  
+
+
+
+
   /////////////////////spped////////////////////
-  function speedOfSnakeCursor(){
+  function speedOfSnakeCursor() {
     var offsetX = mouseX - head.x;
     var offsetY = mouseY - head.y;
 
@@ -130,9 +146,9 @@ function runProgram() {
     // you will need to make two more events for click and release of mouse;
     // those events should change the "speed" variable
 
-    head.speedX = speed * Math.cos(angle);
-    head.speedY = speed * Math.sin(angle);
-    
+    head.speedX = actualSpeed * Math.cos(angle);
+    head.speedY = actualSpeed * Math.sin(angle);
+
   }
 
 
@@ -177,7 +193,13 @@ function runProgram() {
   ////////////////////////////////////////////////////////////////////////////////
 
 
+  function gameOverBox() {
+    head.speedX = 0;
+    head.speedY = 0;
+    $("#gameOverBox").show();
 
+
+  }
 
 
 
@@ -209,4 +231,5 @@ function runProgram() {
   }
 
 }
+
 
