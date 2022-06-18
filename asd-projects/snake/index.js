@@ -11,9 +11,10 @@ function runProgram() {
   var FRAME_RATE = 60;
   var FRAMES_PER_SECOND_INTERVAL = 1000 / FRAME_RATE;
   var BASE_SPEED = 10;
+  
 
   // Game Item Objects
-  KEY = {
+  var KEY = {
     "LEFT": 37,
     "UP": 38,
     "RIGHT": 39,
@@ -22,8 +23,12 @@ function runProgram() {
     "A": 65,
     "S": 83,
     "D": 68,
-  }
-  
+  };
+
+  var MOUSE = {
+    "LEFT_CLICK": 0,
+  };
+
   function GameItem(elementId) {
     var gameItem = {};
     gameItem.id = elementId;
@@ -33,11 +38,12 @@ function runProgram() {
     gameItem.height = $(elementId).height();
     gameItem.speedX = 0;
     gameItem.speedY = 0;
-    
+
     return gameItem
   }
   var board = GameItem("#board");
   var head = GameItem("#head");
+  var apple = GameItem("#apple");
   var mouseX = head.x;
   var mouseY = head.y;
   var gameOverID = "#gameOverBox";
@@ -49,7 +55,8 @@ function runProgram() {
   $(document).on("keydown", handleKeyDown);                           // change 'eventType' to the type of event you want to handle
   $(document).on("keyup", handleKeyUp);
   $("#board").on("mousemove", MouseMove);
-
+  $(document).on("mousedown", mouseButtonClicked);
+  $(document).on("mouseup", mouseButtonReleased);
   ////////////////////////////////////////////////////////////////////////////////
   ///////////////////////// CORE LOGIC ///////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
@@ -58,14 +65,19 @@ function runProgram() {
   On each "tick" of the timer, a new frame is dynamically drawn using JavaScript
   by calling this function and executing the code inside.
   */
+  
   function newFrame() {
     redrawGameItem(head);
     updatePositionBody();
     updateposition(head);
     hitsBorder();
+    speedOfSnakeCursor();
+    if (head.x <= apple.x && head.y === apple.y) {
+      spawnApple(apple);
 
-    speedOfSnakeCursor()
+    }
   }
+
 
 
   /* 
@@ -121,17 +133,35 @@ function runProgram() {
     mouseY = event.pageY
 
   }
+  ////////////mouse click function to speed up snake///////////////////
+  function mouseButtonClicked(event) {
+    //////if clicked/////
+    if (event.button === MOUSE.LEFT_CLICK) {
+      actualSpeed = BASE_SPEED * 2
+    }
+  };
+
+
+
+  ////if realeased//////
+  function mouseButtonReleased(event) {
+    if (event.button === MOUSE.LEFT_CLICK) {
+      actualSpeed = BASE_SPEED;
+    }
+
+  };
+
 
   //hits border
   function hitsBorder() {
     if (head.x >= board.width) {
       gameOverBox();
-    } 
-    if (head.y >= board.height){
+    }
+    if (head.y >= board.height) {
       gameOverBox();
     }
   }
-  
+
 
 
 
@@ -221,7 +251,15 @@ function runProgram() {
 
 
 
-
+  function randomGrid(maxPixel) {
+    return Math.floor(Math.random() * (maxPixel / GRID_SIZE)) * GRID_SIZE;
+  }
+  function spawnApple(piece) {
+    piece.x = randomGrid(1240);
+    piece.y = randomGrid(500);
+    $(piece.id).css("left", piece.x);
+    $(piece.id).css("top", piece.y);
+  }
   function endGame() {
     // stop the interval timer
     clearInterval(interval);
