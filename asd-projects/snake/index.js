@@ -211,7 +211,7 @@ function runProgram() {
   head.x += head.speedX;
 
   function applemove(result) {
-    result = ((apple.x < && head.width > head.width && apple.top < head.y && apple.y > head.height) ? true : false);
+    result = ((apple.x < head.y && head.width > head.width && apple.top < head.y && apple.y > head.height) ? true : false);
     return result;
 
   };
