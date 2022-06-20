@@ -11,7 +11,7 @@ function runProgram() {
   var FRAME_RATE = 60;
   var FRAMES_PER_SECOND_INTERVAL = 1000 / FRAME_RATE;
   var BASE_SPEED = 10;
-  
+
 
   // Game Item Objects
   var KEY = {
@@ -50,6 +50,7 @@ function runProgram() {
   var actualSpeed = BASE_SPEED;
 
 
+
   // one-time setup
   var interval = setInterval(newFrame, FRAMES_PER_SECOND_INTERVAL);   // execute newFrame every 0.0166 seconds (60 Frames per second)
   $(document).on("keydown", handleKeyDown);                           // change 'eventType' to the type of event you want to handle
@@ -65,17 +66,18 @@ function runProgram() {
   On each "tick" of the timer, a new frame is dynamically drawn using JavaScript
   by calling this function and executing the code inside.
   */
-  
+
   function newFrame() {
     redrawGameItem(head);
     updatePositionBody();
     updateposition(head);
     hitsBorder();
     speedOfSnakeCursor();
-    if (head.x <= apple.x && head.y === apple.y) {
-      spawnApple(apple);
+    applemove(result);
+    newApplePosition();
+    redrawGameItem(apple);
 
-    }
+
   }
 
 
@@ -88,6 +90,7 @@ function runProgram() {
     if (event.which === KEY.LEFT) {
       head.speedX = -5;
       console.log("left pressed");
+      newApplePosition();
     }
     else if (event.which === KEY.UP) {
       head.speedY = -5;
@@ -186,6 +189,7 @@ function runProgram() {
   function redrawGameItem(piece) {
     $(piece.id).css("left", piece.x);
     $(piece.id).css("top", piece.y);
+
   };
 
   ///repostion///
@@ -194,11 +198,6 @@ function runProgram() {
     piece.y += piece.speedY
 
   };
-
-  function updatePositionBody() {
-
-  }
-
 
 
   var head = {
@@ -211,9 +210,11 @@ function runProgram() {
 
   head.x += head.speedX;
 
+  function applemove(result) {
+    result = ((apple.x < && head.width > head.width && apple.top < head.y && apple.y > head.height) ? true : false);
+    return result;
 
-
-
+  };
 
 
 
@@ -223,27 +224,24 @@ function runProgram() {
   ////////////////////////////////////////////////////////////////////////////////
 
 
-  function gameOverBox() {
-    head.speedX = 0;
-    head.speedY = 0;
-    $("#gameOverBox").show();
+
+  //////random values of pixels//////
+  function newApplePosition() {
+apple.x =  Math.random() * 1140;
+apple.y =  Math.random() * 500;
+    $("#apple").css("left", apple.x);
+    $("#apple").css("top", apple.y); 
+    
+}
 
 
-  }
+function gameOverBox() {
+  head.speedX = 0;
+  head.speedY = 0;
+  $("#gameOverBox").show();
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
 
 
@@ -251,15 +249,23 @@ function runProgram() {
 
 
 
-  function randomGrid(maxPixel) {
-    return Math.floor(Math.random() * (maxPixel / GRID_SIZE)) * GRID_SIZE;
-  }
-  function spawnApple(piece) {
-    piece.x = randomGrid(1240);
-    piece.y = randomGrid(500);
-    $(piece.id).css("left", piece.x);
-    $(piece.id).css("top", piece.y);
-  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   function endGame() {
     // stop the interval timer
     clearInterval(interval);

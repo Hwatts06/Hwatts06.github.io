@@ -6,7 +6,6 @@ body {
   width: 1240px;
   height: 500px;
   border: 5px solid black;
-
   position: relative;
 }
 
@@ -16,10 +15,8 @@ body {
   width: 20px;
   height: 20px;
   position: absolute;
-  /*   left: 100px; */
-  /* Uncomment if you want to set a "starting" position */
-  /*   top: 100px;  */
-  /* Uncomment if you want to set a "starting" position */
+  left: 100px; 
+  top: 100px; 
 }
 
 #head {
@@ -55,3 +52,4 @@ canvas {
   top: 300px;
 
 }
+
