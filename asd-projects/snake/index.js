@@ -50,8 +50,8 @@ function runProgram() {
   var gameOverID = "#gameOverBox";
   var actualSpeed = BASE_SPEED;
   var scoreBoard = GameItem("#scoreBoard");
-  var snakeBody = [head, ];
-  
+  var snakeBody = [head];
+
 
 
 
@@ -76,15 +76,14 @@ function runProgram() {
 
   function newFrame() {
     redrawGameItem(head);
-    
     updateposition(head);
-
     hitsBorder();
     speedOfSnakeCursor();
     appleMove(apple, head);
-    scoreboard();
     redrawGameItem(apple);
     scoreKeep();
+    moveBody();
+    
   }
 
   $("#refreshButton").on("click", refresh);
@@ -128,7 +127,7 @@ function runProgram() {
     else if (event.which === KEY.UP) {
       head.speedY = 0;
       console.log("up not pressed");
-      
+
     }
 
     else if (event.which === KEY.RIGHT) {
@@ -213,32 +212,33 @@ function runProgram() {
   };
 
   ///repostion///
-  function updateposition(piece) {
-      piece.x += piece.speedX;
-      piece.y += piece.speedY;
-    
+  function updateposition(pieceNum) {
+    if (pieceNum === 0) {
+      head.x += head.speedX;
+      head.y += head.speedY;
+    } else {
+      snakeBody.x += piece.speedX;
+      snakeBody.y += piece.speedY;
+    }
   };
 
 
 
 
   ////// collision /////
-  function createBody(id){
+  function createBody(id) {
     $("<div>").attr("id", id)
-              .addClass("brick")
-              .appendTo("#board");
+      .addClass("brick")
+      .appendTo("#board");
   }
   function addBody() {
-    if (appleMove() === true) {
-      var nextId = "snek" + snakeBody.length;
-  
-      createBody(nextId);
-      
-      var newObject = GameItem("#" + nextId);
-      
-      snakeBody.push(newObject); 
-      
-    }
+    var nextId = "snek" + snakeBody.length;
+
+    createBody(nextId);
+
+    var newObject = GameItem("#" + nextId);
+
+    snakeBody.push(newObject);
   }
 
   function appleMove(a, b) {
@@ -273,7 +273,11 @@ function runProgram() {
   ////////////////////////////////////////////////////////////////////////////////
   ////////////////////////// HELPER FUNCTIONS ////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
-
+  function moveBody() {
+    for (var i = snakeBody.length - 1; i >= 1; i--) {
+      updateposition(snakeBody[i]);
+    }
+  }
 
 
   //////random values of pixels//////
@@ -282,7 +286,6 @@ function runProgram() {
     apple.y = Math.random() * 400;
     $("#apple").css("left", apple.x);
     $("#apple").css("top", apple.y);
-
   }
 
 
