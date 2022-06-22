@@ -217,8 +217,8 @@ function runProgram() {
       head.x += head.speedX;
       head.y += head.speedY;
     } else {
-      snakeBody.x += piece.speedX;
-      snakeBody.y += piece.speedY;
+      snakeBody[i].x = snakeBody[i - 1].x;
+      snakeBody[i].y = snakeBody[i - 1].y;
     }
   };
 
