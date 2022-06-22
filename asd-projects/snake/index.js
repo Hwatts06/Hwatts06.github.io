@@ -212,11 +212,12 @@ function runProgram() {
   };
 
   ///repostion///
-  function updateposition(pieceNum) {
-    if (pieceNum === 0) {
+  function updateposition(i) {
+    if (i === 0) {
       head.x += head.speedX;
       head.y += head.speedY;
-    } else {
+    }
+     else {
       snakeBody[i].x = snakeBody[i - 1].x;
       snakeBody[i].y = snakeBody[i - 1].y;
     }
@@ -275,7 +276,7 @@ function runProgram() {
   ////////////////////////////////////////////////////////////////////////////////
   function moveBody() {
     for (var i = snakeBody.length - 1; i >= 1; i--) {
-      updateposition(snakeBody[i]);
+      updateposition(i);
     }
   }
 
