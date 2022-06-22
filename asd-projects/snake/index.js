@@ -50,9 +50,9 @@ function runProgram() {
   var gameOverID = "#gameOverBox";
   var actualSpeed = BASE_SPEED;
   var scoreBoard = GameItem("#scoreBoard");
-  var snakeBody = [head, body];
-  var body = GameItem(".bodyElement");
+  var snakeBody = [head, ];
   
+
 
 
 
@@ -76,9 +76,9 @@ function runProgram() {
 
   function newFrame() {
     redrawGameItem(head);
-    redrawGameItem(body);
+    
     updateposition(head);
-    updateposition(body);
+
     hitsBorder();
     speedOfSnakeCursor();
     appleMove(apple, head);
@@ -113,7 +113,7 @@ function runProgram() {
       head.speedY = 5;
       console.log("down pressed");
     }
-    else if (event.which === KEY.R){
+    else if (event.which === KEY.R) {
       document.location.reload()
     }
   }
@@ -128,7 +128,7 @@ function runProgram() {
     else if (event.which === KEY.UP) {
       head.speedY = 0;
       console.log("up not pressed");
-    
+      
     }
 
     else if (event.which === KEY.RIGHT) {
@@ -194,13 +194,13 @@ function runProgram() {
 
     var distance = Math.sqrt(Math.pow(offsetX, 2), Math.pow(offsetY, 2));
 
-    if (distance > actualSpeed){
+    if (distance > actualSpeed) {
       head.speedX = actualSpeed * Math.cos(angle);
       head.speedY = actualSpeed * Math.sin(angle);
     }
     else {
-      head.speedX = distance/actualSpeed * Math.cos(angle);
-      head.speedY = distance/actualSpeed * Math.sin(angle);
+      head.speedX = distance / actualSpeed * Math.cos(angle);
+      head.speedY = distance / actualSpeed * Math.sin(angle);
     }
   }
 
@@ -214,48 +214,58 @@ function runProgram() {
 
   ///repostion///
   function updateposition(piece) {
-    piece.x += piece.speedX;
-    piece.y += piece.speedY;
-
+      piece.x += piece.speedX;
+      piece.y += piece.speedY;
+    
   };
-  
 
 
+
+
+  ////// collision /////
+  function createBody(id){
+    $("<div>").attr("id", id)
+              .addClass("brick")
+              .appendTo("#board");
+  }
+  function addBody() {
+    if (appleMove() === true) {
+      var nextId = "snek" + snakeBody.length;
   
-////// collision /////
-  
-function addBody(){
-    if (appleMove() === true){
-      body = 0;
-      snakeBody.push(body++);
+      createBody(nextId);
+      
+      var newObject = GameItem("#" + nextId);
+      
+      snakeBody.push(newObject); 
+      
     }
   }
 
   function appleMove(a, b) {
-   // $("#board").css("color", "white")
-   //            .text(`${a.x}, ${a.y}, ${a.width}, ${a.height},\n${b.x}, ${b.y}, ${b.width}, ${b.height}`);
+    // $("#board").css("color", "white")
+    //            .text(`${a.x}, ${a.y}, ${a.width}, ${a.height},\n${b.x}, ${b.y}, ${b.width}, ${b.height}`);
 
     if ((a.y + a.height) > (b.y) &&
-    a.y < (b.y + b.height) &&
-    (a.x + a.width) > b.x  &&
-    a.x < (b.x + b.width)) {
-    //  $("#head").text("HERE");
-        newApplePosition();
-    score = score + 1;
-    $("h2").text(score);
+      a.y < (b.y + b.height) &&
+      (a.x + a.width) > b.x &&
+      a.x < (b.x + b.width)) {
+      //  $("#head").text("HERE");
+      newApplePosition();
+      score = score + 1;
+      $("h2").text(score);
       addBody();
 
 
-   }
+    }
   }
 
 
 
-////score board////
+  ////score board////
   var score = 0;
   var scoreboard = $("#score");
-  function scoreKeep(){
-    
+  function scoreKeep() {
+
   }
 
 
@@ -268,26 +278,26 @@ function addBody(){
 
   //////random values of pixels//////
   function newApplePosition() {
-apple.x =  Math.random() * 1140;
-apple.y =  Math.random() * 400;
+    apple.x = Math.random() * 1140;
+    apple.y = Math.random() * 400;
     $("#apple").css("left", apple.x);
-    $("#apple").css("top", apple.y); 
-    
-}
+    $("#apple").css("top", apple.y);
+
+  }
 
 
 
-function refresh(){
-  document.location.reload();
-}
+  function refresh() {
+    document.location.reload();
+  }
 
-function gameOverBox() {
-  head.speedX = 0;
-  head.speedY = 0;
-  $("#gameOverBox").show();
+  function gameOverBox() {
+    head.speedX = 0;
+    head.speedY = 0;
+    $("#gameOverBox").show();
 
 
-}
+  }
 
 
 
