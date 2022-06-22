@@ -1,26 +1,37 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Title</title>
-    <!-- Load CSS files -->
-    <link rel="stylesheet" type="text/css" href="index.css">
-    
-    <!-- Load JavaScript files -->
-    <script src="jquery.min.js"></script>
-    <script src="background.js"></script>
-    <script src="index.js"></script>
-  </head>
-  
-  <body>
-    <canvas id="canvas"></canvas>
-    <div id="board">
-      <div id="apple"></div>
-      <div id="head"></div>
-      <div id="snakeHolder"></div>
+
+<head>
+  <title>Title</title>
+  <!-- Load CSS files -->
+  <link rel="stylesheet" type="text/css" href="index.css">
+
+  <!-- Load JavaScript files -->
+  <script src="jquery.min.js"></script>
+  <script src="background.js"></script>
+  <script src="index.js"></script>
+</head>
+
+<body>
+  <canvas id="canvas"></canvas>
+  <div id="board">
+    <div id="apple"></div>
+    <div id="head" class="bodyElement"></div>
+
+  </div>
+  <div>
+    <div id="gameOverBox"> ------GAME OVER------ Press (R) to Restart
     </div>
-    <div>
-      <div id="gameOverBox"> GAME OVER </div>
-    </div>
-    <div id="scoreBoard"></div>
-  </body>
+
+  </div>
+  <div id="scoreBoard">
+    <h1>
+      Score:
+    </h1>
+    <h2>
+      0
+    </h2>
+  </div>
+</body>
+
 </html>

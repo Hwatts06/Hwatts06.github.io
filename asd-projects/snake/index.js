@@ -9,8 +9,8 @@ function runProgram() {
 
   // Constant Variables
   var FRAME_RATE = 60;
-  var FRAMES_PER_SECOND_INTERVAL = 1000 / FRAME_RATE;
-  var BASE_SPEED = 10;
+  var FRAMES_PER_SECOND_INTERVAL = 100 / FRAME_RATE;
+  var BASE_SPEED = 8;
 
 
   // Game Item Objects
@@ -23,6 +23,7 @@ function runProgram() {
     "A": 65,
     "S": 83,
     "D": 68,
+    "R": 82,
   };
 
   var MOUSE = {
@@ -48,6 +49,12 @@ function runProgram() {
   var mouseY = head.y;
   var gameOverID = "#gameOverBox";
   var actualSpeed = BASE_SPEED;
+  var scoreBoard = GameItem("#scoreBoard");
+  var snakeBody = [head, body];
+  var body = GameItem(".bodyElement");
+  
+
+
 
 
 
@@ -69,18 +76,18 @@ function runProgram() {
 
   function newFrame() {
     redrawGameItem(head);
-    updatePositionBody();
+    redrawGameItem(body);
     updateposition(head);
+    updateposition(body);
     hitsBorder();
     speedOfSnakeCursor();
-    applemove(result);
-    newApplePosition();
+    appleMove(apple, head);
+    scoreboard();
     redrawGameItem(apple);
-
-
+    scoreKeep();
   }
 
-
+  $("#refreshButton").on("click", refresh);
 
   /* 
   Called in response to events.
@@ -95,6 +102,7 @@ function runProgram() {
     else if (event.which === KEY.UP) {
       head.speedY = -5;
       console.log("up pressed");
+      appleMove();
     }
 
     else if (event.which === KEY.RIGHT) {
@@ -104,6 +112,9 @@ function runProgram() {
     else if (event.which === KEY.DOWN) {
       head.speedY = 5;
       console.log("down pressed");
+    }
+    else if (event.which === KEY.R){
+      document.location.reload()
     }
   }
 
@@ -117,6 +128,7 @@ function runProgram() {
     else if (event.which === KEY.UP) {
       head.speedY = 0;
       console.log("up not pressed");
+    
     }
 
     else if (event.which === KEY.RIGHT) {
@@ -127,6 +139,7 @@ function runProgram() {
       head.speedY = 0;
       console.log("down not pressed");
     }
+
 
 
 
@@ -179,9 +192,16 @@ function runProgram() {
     // you will need to make two more events for click and release of mouse;
     // those events should change the "speed" variable
 
-    head.speedX = actualSpeed * Math.cos(angle);
-    head.speedY = actualSpeed * Math.sin(angle);
+    var distance = Math.sqrt(Math.pow(offsetX, 2), Math.pow(offsetY, 2));
 
+    if (distance > actualSpeed){
+      head.speedX = actualSpeed * Math.cos(angle);
+      head.speedY = actualSpeed * Math.sin(angle);
+    }
+    else {
+      head.speedX = distance/actualSpeed * Math.cos(angle);
+      head.speedY = distance/actualSpeed * Math.sin(angle);
+    }
   }
 
 
@@ -195,27 +215,48 @@ function runProgram() {
   ///repostion///
   function updateposition(piece) {
     piece.x += piece.speedX;
-    piece.y += piece.speedY
+    piece.y += piece.speedY;
 
   };
+  
 
 
-  var head = {
-    id: "#head",
-    x: 0,
-    y: 0,
-    speedX: 0,
-    speedY: 0,
-  };
+  
+////// collision /////
+  
+function addBody(){
+    if (appleMove() === true){
+      body = 0;
+      snakeBody.push(body++);
+    }
+  }
 
-  head.x += head.speedX;
+  function appleMove(a, b) {
+   // $("#board").css("color", "white")
+   //            .text(`${a.x}, ${a.y}, ${a.width}, ${a.height},\n${b.x}, ${b.y}, ${b.width}, ${b.height}`);
 
-  function applemove(result) {
-    result = ((apple.x < head.y && head.width > head.width && apple.top < head.y && apple.y > head.height) ? true : false);
-    return result;
+    if ((a.y + a.height) > (b.y) &&
+    a.y < (b.y + b.height) &&
+    (a.x + a.width) > b.x  &&
+    a.x < (b.x + b.width)) {
+    //  $("#head").text("HERE");
+        newApplePosition();
+    score = score + 1;
+    $("h2").text(score);
+      addBody();
 
-  };
 
+   }
+  }
+
+
+
+////score board////
+  var score = 0;
+  var scoreboard = $("#score");
+  function scoreKeep(){
+    
+  }
 
 
 
@@ -228,12 +269,17 @@ function runProgram() {
   //////random values of pixels//////
   function newApplePosition() {
 apple.x =  Math.random() * 1140;
-apple.y =  Math.random() * 500;
+apple.y =  Math.random() * 400;
     $("#apple").css("left", apple.x);
     $("#apple").css("top", apple.y); 
     
 }
 
+
+
+function refresh(){
+  document.location.reload();
+}
 
 function gameOverBox() {
   head.speedX = 0;
