@@ -8,7 +8,7 @@ function runProgram() {
   ////////////////////////////////////////////////////////////////////////////////
 
   // Constant Variables
-  var FRAME_RATE = 60;
+  var FRAME_RATE = 30;
   var FRAMES_PER_SECOND_INTERVAL = 100 / FRAME_RATE;
   var BASE_SPEED = 8;
 
@@ -75,14 +75,14 @@ function runProgram() {
   */
 
   function newFrame() {
-    redrawGameItem(head);
     hitsBorder();
     speedOfSnakeCursor();
     appleMove(apple, head);
     redrawGameItem(apple);
     scoreKeep();
     moveBody();
-    
+    update();
+
   }
 
   $("#refreshButton").on("click", refresh);
@@ -201,138 +201,140 @@ function runProgram() {
       head.speedY = distance / actualSpeed * Math.sin(angle);
     }
   }
-
-
-  ////creating game item////
-  function redrawGameItem(piece) {
-    $(piece.id).css("left", piece.x);
-    $(piece.id).css("top", piece.y);
-
-  };
-
-  ///repostion///
-  function updateposition(i) {
-    if (i === 0) {
-      head.x += head.speedX;
-      head.y += head.speedY;
-    }
-     else {
-      snakeBody[i].x = snakeBody[i - 1].x;
-      snakeBody[i].y = snakeBody[i - 1].y;
-    }
-  };
-
-
-
-
-  ////// collision /////
-  function createBody(id) {
-    $("<div>").attr("id", id)
-      .addClass("brick")
-      .appendTo("#board");
-  }
-  function addBody() {
-    var nextId = "snek" + snakeBody.length;
-
-    createBody(nextId);
-
-    var newObject = GameItem("#" + nextId);
-
-    snakeBody.push(newObject);
-  }
-
-  function appleMove(a, b) {
-    // $("#board").css("color", "white")
-    //            .text(`${a.x}, ${a.y}, ${a.width}, ${a.height},\n${b.x}, ${b.y}, ${b.width}, ${b.height}`);
-
-    if ((a.y + a.height) > (b.y) &&
-      a.y < (b.y + b.height) &&
-      (a.x + a.width) > b.x &&
-      a.x < (b.x + b.width)) {
-      //  $("#head").text("HERE");
-      newApplePosition();
-      score = score + 1;
-      $("h2").text(score);
-      addBody();
-
-
+  function update() {
+    for (var i = 0; i < snakeBody.length; i++) {
+      redrawGameItem(snakeBody[i]);
     }
   }
+    ////creating game item////
+    function redrawGameItem(piece) {
+      $(piece.id).css("left", piece.x);
+      $(piece.id).css("top", piece.y);
+    };
+
+    ///repostion///
+    function updateposition(i) {
+      if (i === 0) {
+        head.x += head.speedX;
+        head.y += head.speedY;
+      }
+      else {
+        snakeBody[i].x = snakeBody[i - 1].x;
+        snakeBody[i].y = snakeBody[i - 1].y;
+      }
+    };
 
 
 
-  ////score board////
-  var score = 0;
-  var scoreboard = $("#score");
-  function scoreKeep() {
 
-  }
-
-
-
-  ////////////////////////////////////////////////////////////////////////////////
-  ////////////////////////// HELPER FUNCTIONS ////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////////
-  function moveBody() {
-    for (var i = snakeBody.length - 1; i >= 0; i--) {
-      updateposition(i);
+    ////// collision /////
+    function createBody(id) {
+      $("<div>").attr("id", id)
+        .addClass("brick")
+        .appendTo("#board");
     }
+    function addBody() {
+      var nextId = "snek" + snakeBody.length;
+
+      createBody(nextId);
+
+      var newObject = GameItem("#" + nextId);
+
+      snakeBody.push(newObject);
+    }
+
+    function appleMove(a, b) {
+      // $("#board").css("color", "white")
+      //            .text(`${a.x}, ${a.y}, ${a.width}, ${a.height},\n${b.x}, ${b.y}, ${b.width}, ${b.height}`);
+
+      if ((a.y + a.height) > (b.y) &&
+        a.y < (b.y + b.height) &&
+        (a.x + a.width) > b.x &&
+        a.x < (b.x + b.width)) {
+        //  $("#head").text("HERE");
+        newApplePosition();
+        score = score + 1;
+        $("h2").text(score);
+        addBody();
+
+
+      }
+    }
+
+
+
+    ////score board////
+    var score = 0;
+    var scoreboard = $("#score");
+    function scoreKeep() {
+
+    }
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////// HELPER FUNCTIONS ////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    function moveBody() {
+      for (var i = snakeBody.length - 1; i >= 0; i--) {
+        updateposition(i);
+      }
+    }
+
+
+    //////random values of pixels//////
+    function newApplePosition() {
+      apple.x = Math.random() * 1140;
+      apple.y = Math.random() * 400;
+      $("#apple").css("left", apple.x);
+      $("#apple").css("top", apple.y);
+    }
+
+
+
+    function refresh() {
+      document.location.reload();
+    }
+
+    function gameOverBox() {
+      head.speedX = 0;
+      head.speedY = 0;
+      $("#gameOverBox").show();
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function endGame() {
+      // stop the interval timer
+      clearInterval(interval);
+
+      // turn off event handlers
+      $(document).off();
+    }
+
   }
-
-
-  //////random values of pixels//////
-  function newApplePosition() {
-    apple.x = Math.random() * 1140;
-    apple.y = Math.random() * 400;
-    $("#apple").css("left", apple.x);
-    $("#apple").css("top", apple.y);
-  }
-
-
-
-  function refresh() {
-    document.location.reload();
-  }
-
-  function gameOverBox() {
-    head.speedX = 0;
-    head.speedY = 0;
-    $("#gameOverBox").show();
-
-
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  function endGame() {
-    // stop the interval timer
-    clearInterval(interval);
-
-    // turn off event handlers
-    $(document).off();
-  }
-
-}
 
 
