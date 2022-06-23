@@ -100,7 +100,7 @@ function runProgram() {
     else if (event.which === KEY.UP) {
       head.speedY = -5;
       console.log("up pressed");
-      appleMove();
+      appleMove(apple, head);
     }
 
     else if (event.which === KEY.RIGHT) {
@@ -274,7 +274,7 @@ function runProgram() {
   ////////////////////////// HELPER FUNCTIONS ////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
   function moveBody() {
-    for (var i = snakeBody.length - 1; i >= 1; i--) {
+    for (var i = snakeBody.length - 1; i >= 0; i--) {
       updateposition(i);
     }
   }
