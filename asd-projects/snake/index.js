@@ -76,7 +76,6 @@ function runProgram() {
 
   function newFrame() {
     redrawGameItem(head);
-    updateposition(head);
     hitsBorder();
     speedOfSnakeCursor();
     appleMove(apple, head);
